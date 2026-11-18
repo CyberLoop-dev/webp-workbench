@@ -13,7 +13,7 @@ def convert(source:Path,output_dir:Path,fmt:str,quality:int,max_width:int|None)-
     with Image.open(source) as original:
         image=ImageOps.exif_transpose(original)
         if max_width and image.width>max_width:
-            height=round(image.height*max_width/image.width)
+            height=max(1,int(image.height*max_width/image.width+0.5))
             image=image.resize((max_width,height),Image.Resampling.LANCZOS)
         if fmt=="jpeg":
             if image.mode not in ("RGB","L"):
